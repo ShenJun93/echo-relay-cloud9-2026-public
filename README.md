@@ -1,5 +1,9 @@
 # ECHO//RELAY
 
+**Live demo (HTTPS):** https://shenjun93.github.io/
+
+**Public MIT source:** https://github.com/ShenJun93/echo-relay-cloud9-2026-public
+
 **One switch. Two selves. Sixty seconds.**
 
 An original booth-first arcade game for Cloud9 × JetBrains Hackathon 2026, Category 3 (Event Mini Game). Built with TypeScript, Vite, Canvas 2D and no game backend.
@@ -47,4 +51,4 @@ Build output is `dist/`. Serve from a **domain root** (Vite `base: "/"` and root
 
 This independent prototype does not use Cloud9, JetBrains or Riot character assets or logos and is not affiliated with the organizers. Source code is licensed under [MIT](LICENSE).
 
-**Publication note:** This is a source-package candidate. A public repo URL, HTTPS demo, video and final Devpost project submission require separate owner approval. They do not exist merely because this package was prepared.
+**Current release:** Public source and an independently checked HTTPS demo are online. The live website contains the five static assets built from public source commit `8600c925e22071a122be42264d1ba9e55fab9dc2`, deployed with GitHub Pages commit `3fb3c87a477ed3d819ffb4a1effe180494ee9c24`. Browser QA validated hosted assets, mobile/desktop input, offline reload, and a complete 60-second run and replay using a virtual browser clock. **This is not a human playtest.** No public YouTube video or Devpost project submission has yet been completed. JetBrains license suitability remains separately unverified.
