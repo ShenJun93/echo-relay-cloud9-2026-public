@@ -1,0 +1,25 @@
+{
+  "name": "echo-relay-cloud9-2026",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Original 60-second booth arcade: one switch, two timelines.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "qa:browser": "npm run build && node scripts/run-browser-qa.mjs",
+    "release:check": "npm run build && node scripts/release-preflight.mjs",
+    "qa:judge": "npm run release:check && node scripts/judge-url-qa.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "playwright-core": "^1.65.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.0",
+    "vitest": "^4.0.0"
+  }
+}

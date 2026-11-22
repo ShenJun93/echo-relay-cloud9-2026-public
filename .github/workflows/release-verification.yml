@@ -1,0 +1,48 @@
+# P43 — read-only CI; verify source/build only.
+name: ECHO RELAY release verification
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - feat/echo-relay-p36-balance
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-release:
+    name: Linux Node 24 build and release gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out source without persistent credentials
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Identify exact tested source
+        run: git rev-parse HEAD
+
+      - name: Install pinned dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Deterministic engine regression
+        run: npm test
+
+      - name: TypeScript, build and fail-closed asset/MIME preflight
+        run: npm run release:check
+
+      - name: Verify tracked files were not modified by CI
+        run: git diff --exit-code

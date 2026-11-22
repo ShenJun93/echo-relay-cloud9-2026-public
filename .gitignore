@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+.cache/
+.vite/
+*.log
+.env
+.env.*
+!.env.example
+local/
+acceptance/
+!acceptance/.gitkeep
+.idea/workspace.xml
+.idea/shelf/
+.idea/httpRequests/
+.idea/**/workspace.xml
