@@ -16,9 +16,9 @@ The candidate uses a **0.33s** Echo and **0.80s** cooldown. In a sampled paramet
 
 The final local game passed **16/16 deterministic unit tests**, a Vite/TypeScript build and an independent browser acceptance suite including a full 60-second run, replay and real offline reload. Five production assets were independently built with matching SHA-256 values on Windows and Linux Node 24.
 
-The private P38 demo footage showed a real natural-clock game round of **60.501s**, score **16,360**, **28 Dual Links**. The **43 Space presses were automated**, not human playtest input. IDE images were labeled genuine stills, not a falsely staged current editing video.
+The private P38 demo footage showed a real natural-clock game round of **60.501s**, score **16,360**, **28 Dual Links**. The **43 Space presses were automated**, not human playtest input. IDE images were labeled genuine stills, not a falsely staged current editing video. A later **private** P52/P53 video candidate preserves these images and gameplay footage byte-for-byte after the P51 privacy mask, replaces Zira narration with 13 offline Piper TTS cues, and remains **unpublished** pending owner review and permissions. It is not evidence of a new live IDE session.
 
-At source curation, no actual public-origin CDN checks, on-site booth hardware observations or independent human first-time playtest results had been established.
+**P48–P50 public-origin acceptance, after initial source curation:** The working [HTTPS game](https://shenjun93.github.io/) was independently tested from clean, signed-out Chrome browser contexts. Public JS/CSS/Service Worker SHA-256 hashes matched the source-pinned build, mobile and desktop input worked, and reload/start under an offline Service Worker worked. A separate browser round finished and replayed in **60 simulated seconds using Playwright's virtual clock**. On a touchscreen-enabled desktop browser, selecting **FULL SCREEN** made the canvas and switch control fit within 1366×768; switch-button and arena taps were verified. These are automated tests, **not** real booth hardware studies or first-time human sessions. Uncoached human player target remains 0/5 (internal goal, not an organizer requirement).
 
 ## Reproduce locally
 
