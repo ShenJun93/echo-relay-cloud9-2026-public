@@ -6,7 +6,7 @@ const browser=await chromium.launch({
   headless:true,
 });
 try {
-  for(const viewport of [{width:1280,height:840},{width:1280,height:900},{width:1280,height:960},{width:1280,height:981},{width:800,height:600},{width:360,height:800}]){
+  for(const viewport of [{width:1280,height:840},{width:1280,height:900},{width:1280,height:960},{width:1280,height:981},{width:1366,height:768},{width:800,height:600},{width:360,height:800},{width:375,height:667},{width:667,height:375},{width:740,height:360},{width:812,height:375},{width:844,height:390},{width:896,height:414},{width:932,height:430}]){
     const context=await browser.newContext({viewport});
     const page=await context.newPage();
     const errors=[];
