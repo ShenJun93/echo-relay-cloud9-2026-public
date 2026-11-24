@@ -40,6 +40,7 @@ try {
   await run("scripts/browser-start-visibility.mjs");
   await run("scripts/browser-round.mjs");
   await run("scripts/browser-offline.mjs");
+  await run("scripts/browser-offline-readiness.mjs");
   await run("scripts/browser-sw-upgrade.mjs");
   await run("scripts/browser-sw-concurrent.mjs");
   await run("scripts/browser-sw-mime-fallback.mjs");

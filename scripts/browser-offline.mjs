@@ -35,8 +35,9 @@ try {
   await page.getByRole("button", { name: "START 60-SECOND RUN" }).click();
   await page.getByText("LINK ACTIVE").waitFor();
   assert.equal(errors.length, 0, "Offline JS errors: " + JSON.stringify(errors));
+  await page.waitForFunction(() => document.querySelector("#offline-status")?.textContent === "OFFLINE / RELOAD READY", {}, { timeout: 5000 });
   const label = await page.locator("#offline-status").textContent();
-  assert.match(label ?? "", /OFFLINE PLAY READY/);
+  assert.match(label ?? "", /OFFLINE \/ RELOAD READY/);
   console.log(JSON.stringify({
     status: "PASS", offlineAfterFirstLoad: true, cachedAssetPaths: assets.paths,
     offlineRoundStarts: true, browserRuntimeErrors: errors.length,

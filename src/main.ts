@@ -309,14 +309,73 @@ boardClearButton.addEventListener("click", () => {
   announcer.textContent = "Local high scores cleared.";
 });
 
+// Keep this name aligned with public/sw.js. CacheStorage.match never creates a cache.
+const OFFLINE_CACHE_NAME = "echo-relay-event-v4";
+let connectivityGeneration = 0;
+
+async function hasCachedReload(): Promise<boolean> {
+  try {
+    const controller = navigator.serviceWorker?.controller;
+    if (!controller || !("caches" in window) ||
+        controller.scriptURL !== new URL("/sw.js", location.href).href) return false;
+    const match = (path: string) => caches.match(path, {
+      cacheName: OFFLINE_CACHE_NAME, ignoreVary: true,
+    });
+    const shell = await match("/");
+    if (!shell?.ok || !/^text\/html(?:;|$)/i.test(shell.headers.get("content-type") ?? "")) return false;
+    const html = await shell.text();
+    const paths = [...new Set([...html.matchAll(/(?:src|href)="(\/assets\/[^"]+)"/g)].map(m => m[1]))];
+    if (!paths.some(path => /\.m?js$/.test(path)) || !paths.some(path => /\.css$/.test(path))) return false;
+    for (const path of paths) {
+      const url = new URL(path, location.origin);
+      if (url.origin !== location.origin || !url.pathname.startsWith("/assets/")) return false;
+      const cached = await match(path);
+      const mime = (cached?.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
+      if (!cached?.ok) return false;
+      if (/\.m?js$/.test(path)) {
+        if (!/^(?:text|application)\/(?:java|ecma)script$/.test(mime)) return false;
+      } else if (/\.css$/.test(path)) {
+        if (mime !== "text/css") return false;
+      } else {
+        return false;
+      }
+    }
+    return navigator.serviceWorker.controller === controller;
+  } catch {
+    return false;
+  }
+}
+
 function refreshConnectivity() {
   const status = document.querySelector("#offline-status");
   if (!status) return;
-  if (!navigator.onLine) status.textContent = "OFFLINE PLAY READY";
-  else status.textContent = "LOCAL BOOTH / NO ACCOUNT";
+  const generation = ++connectivityGeneration;
+  if (navigator.onLine) {
+    if (status.textContent !== "LOCAL BOOTH / NO ACCOUNT") status.textContent = "LOCAL BOOTH / NO ACCOUNT";
+    return;
+  }
+  // Do not churn the live region during healthy periodic cache probes.
+  if (status.textContent !== "OFFLINE / RELOAD READY" &&
+      status.textContent !== "OFFLINE / KEEP THIS TAB OPEN") {
+    status.textContent = "OFFLINE / KEEP THIS TAB OPEN";
+  }
+  void hasCachedReload().then(ready => {
+    if (generation !== connectivityGeneration || navigator.onLine) return;
+    const label = ready ? "OFFLINE / RELOAD READY" : "OFFLINE / KEEP THIS TAB OPEN";
+    if (status.textContent !== label) status.textContent = label;
+  });
 }
 addEventListener("online", refreshConnectivity);
 addEventListener("offline", refreshConnectivity);
+addEventListener("focus", refreshConnectivity);
+navigator.serviceWorker?.addEventListener("controllerchange", refreshConnectivity);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) refreshConnectivity();
+});
+// Recheck storage while offline; readiness is a best-effort snapshot.
+setInterval(() => {
+  if (!navigator.onLine && !document.hidden) refreshConnectivity();
+}, 10000);
 refreshConnectivity();
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   // Explicitly constrained to production, never intercept Vite hot reload in dev.

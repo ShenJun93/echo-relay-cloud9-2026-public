@@ -130,7 +130,7 @@ try {
   await mobile.getByRole("button",{name:"START 60-SECOND RUN"}).waitFor({timeout:10000});
   await mobile.getByRole("button",{name:"START 60-SECOND RUN"}).click();
   await mobile.getByText("LINK ACTIVE",{exact:true}).waitFor();
-  assert.match(await mobile.locator("#offline-status").textContent(),/OFFLINE PLAY READY/);
+  await mobile.waitForFunction(() => document.querySelector("#offline-status")?.textContent === "OFFLINE / RELOAD READY", {}, {timeout: 5000});
   await mobileContext.close();
 
   const {ctx:desktopContext,page:desktop}=await makeContext({width:1366,height:768},false);
