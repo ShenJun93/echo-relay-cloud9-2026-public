@@ -44,7 +44,7 @@ Reproduction instructions and independently checked claims are summarized in [En
 
 A later audit found that the live P72 build reported the same offline label when the service worker was blocked, the shell was cached, or its cache was evicted. Only the cached case could reload offline; all three already-loaded tabs could start a round. The source-pinned candidate (4adc012) distinguishes current-tab play from cached reload readiness, checks the shell and required JavaScript/CSS responses, and updates the status after simulated late eviction. It avoids repeated accessibility announcements when the verified state is unchanged. This work was implemented and tested with outside-IDE automation.
 
-Six isolated browser regression scenarios passed, including missing JavaScript, incorrect CSS MIME, and late eviction; the label layout passed 14 state/viewport checks. These are local candidate results, not public deployment evidence or a permanent offline-storage guarantee.
+Six isolated browser regression scenarios passed, including missing JavaScript, incorrect CSS MIME, and late eviction; the label layout passed 14 state/viewport checks. Those initial results were local. The P94/P95 public HTTPS release subsequently matched all five build hashes and passed the six scenarios with HTTP cache explicitly isolated. The initial missing-JavaScript reload assertion exposed browser HTTP cache recovery; see Engineering Evidence for the controlled rerun. None of these checks guarantees permanent offline storage.
 
 ## Native WebStorm code inspection
 

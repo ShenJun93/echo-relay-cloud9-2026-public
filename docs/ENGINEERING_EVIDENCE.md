@@ -22,7 +22,7 @@ The private P38 demo footage showed a real natural-clock game round of **60.501s
 
 ## Offline-readiness candidate and native inspection (24 November 2026)
 
-Source-pinned local candidate: 4adc012c9c1cc317f5a3767a87c42c41fe51dfd6. The active public release remains P72 until a separately verified deployment.
+Source-pinned local candidate: 4adc012c9c1cc317f5a3767a87c42c41fe51dfd6. The runtime was subsequently published from 09ecb39e5f593e5d57ba2ea91e8e8032ffb3ca1a; see the P94/P95 receipt below.
 
 - Unit suite: 16/16 PASS; static TypeScript/Vite release preflight PASS.
 - Browser QA: positive results for all 15 scripts across two runs. The initial invocation reached its 300-second limit before the final two scripts completed; controls and Chrome compatibility passed separately on the same build.
@@ -31,6 +31,14 @@ Source-pinned local candidate: 4adc012c9c1cc317f5a3767a87c42c41fe51dfd6. The act
 - Native WebStorm 2026.3 (WS-263.7307.202) CLI inspection of the candidate src directory completed with exit code 0. XML results contain 164 CssUnusedSymbol warnings, 2 UnnecessaryLocalVariableJS warnings and 1 Grazie grammar suggestion. All 58 distinct flagged CSS names occur in the dynamic UI source; the other findings concern renderer variable readability and a comment. The output logged missing descriptions for some unrelated tools. Findings were reviewed without unnecessary runtime changes. This is not a zero-warning report or a guarantee of defect-free code.
 
 Account-level organizer-provided All Products Pack entitlement was verified through 24 January 2027. The specific historically selected license is not independently established by this evidence. The candidate changes were made using outside-IDE automation; the inspector is genuine additional JetBrains usage. No Junie or Air usage is claimed.
+
+## P94/P95 public release acceptance (24 November 2026)
+
+- Source: [09ecb39](https://github.com/ShenJun93/echo-relay-cloud9-2026-public/commit/09ecb39e5f593e5d57ba2ea91e8e8032ffb3ca1a). Pages: [067785f](https://github.com/ShenJun93/ShenJun93.github.io/commit/067785f2e7caee55faeb6601b17ae1a2feadfd80). Deployment workflow succeeded; [live HTTPS](https://shenjun93.github.io/) returned matching SHA-256 for all five built files.
+- Fresh-browser smoke verified desktop/mobile input, service worker, offline reload, zero JavaScript errors and zero external HTTP requests.
+- The initial public-origin offline fixture stopped on missing-js: the guard correctly advised keeping the tab open, but ordinary browser HTTP cache recovered the removed JavaScript on reload. A controlled two-context probe confirmed recovery with HTTP cache retained and reload failure with HTTP cache cleared and disabled. This was a test-isolation discrepancy, not a false-ready result.
+- Re-running the six original scenarios with a CDP session per disposable page, `Network.enable`, `Network.clearBrowserCache`, and `Network.setCacheDisabled` with `{ cacheDisabled: true }` immediately before switching offline passed 6/6, exit 0. The tracked fixture was not changed in the deployed source; the controlled harness was run in memory. Wrong-CSS tests readiness/current-tab play rather than requiring reload failure.
+- All results are automated checks. No human playtest, event-hardware claim, permanent storage guarantee, video publication or Devpost submission is inferred.
 
 ## Reproduce locally
 
