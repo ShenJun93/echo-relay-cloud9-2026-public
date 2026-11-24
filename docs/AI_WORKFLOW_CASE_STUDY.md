@@ -14,7 +14,7 @@ The game uses an original TypeScript simulation, Vite, canvas rendering, keyboar
 
 **ChatGPT-assisted reasoning, engineering and QA coordination.** Planning and reviews surfaced failure scenarios, compared implementation tradeoffs and organized deterministic engine probes, browser regressions and evidence receipts. Local automation executed tests and browser capture. These outside-IDE agent actions are **not** represented as WebStorm editing. I did not use JetBrains Junie or JetBrains Air on this project; do not attribute them to this work.
 
-The wider application was built with AI-assisted workflows. WebStorm was used meaningfully for the specific READY demonstration and native cross-file refactor, not for every historical change. A valid WebStorm trial/license entitlement remains to be independently confirmed before the final contest declaration.
+The wider application was built with AI-assisted workflows. WebStorm was used meaningfully for the specific READY demonstration and native cross-file refactor, not for every historical change. The organizer-provided JetBrains All Products Pack entitlement was verified at the account level through 24 January 2027. The historically selected IDE license and final eligibility declarations remain separate questions.
 
 ## The useful failure: a passing game with a poor incentive
 
@@ -40,9 +40,21 @@ The original private P38 demo was **109.2 seconds** and used Windows-generated s
 
 Reproduction instructions and independently checked claims are summarized in [Engineering Evidence](ENGINEERING_EVIDENCE.md). The original private QA screenshots and acceptance artifacts are not included in this snapshot.
 
+## An offline label is not a reload guarantee
+
+A later audit found that the live P72 build reported the same offline label when the service worker was blocked, the shell was cached, or its cache was evicted. Only the cached case could reload offline; all three already-loaded tabs could start a round. The source-pinned candidate (4adc012) distinguishes current-tab play from cached reload readiness, checks the shell and required JavaScript/CSS responses, and updates the status after simulated late eviction. It avoids repeated accessibility announcements when the verified state is unchanged. This work was implemented and tested with outside-IDE automation.
+
+Six isolated browser regression scenarios passed, including missing JavaScript, incorrect CSS MIME, and late eviction; the label layout passed 14 state/viewport checks. These are local candidate results, not public deployment evidence or a permanent offline-storage guarantee.
+
+## Native WebStorm code inspection
+
+On 24 November 2026, the WebStorm 2026.3 command-line inspector completed on the candidate source with exit code 0 and XML results. The default-profile run reported 164 CSS unused-symbol warnings (58 distinct selector names, all found as literals in the dynamic UI source), two redundant-local-variable warnings in the renderer, and one grammar suggestion in a comment. No functional change was justified by those findings. In particular, blindly deleting the reported CSS would risk removing styles used by dynamically generated markup. The report generator also logged missing descriptions for some unrelated inspection tools; this is not a claim that every possible inspection ran or that the code is defect-free.
+
+This is a genuine additional JetBrains analysis step, separate from the earlier native refactor and the shell-based implementation. No Junie or Air usage is claimed.
+
 ## What AI did not replace
 
-The code can pass tests while the event experience still needs real first-time players. The internal target of five uncoached sessions is **not an organizer-mandated rule**, and at the time of this draft it has not been met. The **public judge-accessible demo is now live** at [shenjun93.github.io](https://shenjun93.github.io/) with the public [MIT source repository](https://github.com/ShenJun93/echo-relay-cloud9-2026-public). The current contest-suitable JetBrains license, private video's publication rights/owner review, public YouTube URL, and personal/legal Devpost attestations remain **unverified or outstanding**.
+The code can pass tests while the event experience still needs real first-time players. The internal target of five uncoached sessions is **not an organizer-mandated rule**, and at the time of this draft it has not been met. The **public judge-accessible demo is now live** at [shenjun93.github.io](https://shenjun93.github.io/) with the public [MIT source repository](https://github.com/ShenJun93/echo-relay-cloud9-2026-public). The historically selected IDE license, private video's publication rights/owner review, public YouTube URL, and personal/legal Devpost attestations remain **unverified or outstanding**.
 
 **Lesson:** AI is most valuable when it helps create a falsifiable assumption, implement a small change, then build a receipt a different reviewer can reproduce. Real IDE work, human experience and legal eligibility must be attributed and verified separately.
 

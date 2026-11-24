@@ -20,6 +20,18 @@ The private P38 demo footage showed a real natural-clock game round of **60.501s
 
 **P48–P50 public-origin acceptance, after initial source curation:** The working [HTTPS game](https://shenjun93.github.io/) was independently tested from clean, signed-out Chrome browser contexts. Public JS/CSS/Service Worker SHA-256 hashes matched the source-pinned build, mobile and desktop input worked, and reload/start under an offline Service Worker worked. A separate browser round finished and replayed in **60 simulated seconds using Playwright's virtual clock**. On a touchscreen-enabled desktop browser, selecting **FULL SCREEN** made the canvas and switch control fit within 1366×768; switch-button and arena taps were verified. These are automated tests, **not** real booth hardware studies or first-time human sessions. Uncoached human player target remains 0/5 (internal goal, not an organizer requirement).
 
+## Offline-readiness candidate and native inspection (24 November 2026)
+
+Source-pinned local candidate: 4adc012c9c1cc317f5a3767a87c42c41fe51dfd6. The active public release remains P72 until a separately verified deployment.
+
+- Unit suite: 16/16 PASS; static TypeScript/Vite release preflight PASS.
+- Browser QA: positive results for all 15 scripts across two runs. The initial invocation reached its 300-second limit before the final two scripts completed; controls and Chrome compatibility passed separately on the same build.
+- Offline regression: six scenarios PASS, including blocked worker, cached shell, evicted cache, missing JavaScript, wrong CSS MIME and late eviction. The wrong-CSS fixture checks readiness and current-tab play, not reload failure. Two status labels passed 14 layout checks across seven viewports.
+- Local JavaScript bundle SHA-256: 724a9d06140a68e27a5a701d07fc70225927c0c09039702380efb6795b0879e3. CSS and service worker unchanged from P72.
+- Native WebStorm 2026.3 (WS-263.7307.202) CLI inspection of the candidate src directory completed with exit code 0. XML results contain 164 CssUnusedSymbol warnings, 2 UnnecessaryLocalVariableJS warnings and 1 Grazie grammar suggestion. All 58 distinct flagged CSS names occur in the dynamic UI source; the other findings concern renderer variable readability and a comment. The output logged missing descriptions for some unrelated tools. Findings were reviewed without unnecessary runtime changes. This is not a zero-warning report or a guarantee of defect-free code.
+
+Account-level organizer-provided All Products Pack entitlement was verified through 24 January 2027. The specific historically selected license is not independently established by this evidence. The candidate changes were made using outside-IDE automation; the inspector is genuine additional JetBrains usage. No Junie or Air usage is claimed.
+
 ## Reproduce locally
 
 ~~~sh
